@@ -4,512 +4,502 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="bizmail-api-base" content="http://localhost:8001">
-    <title>BizMail — AI-ассистент для корпоративной переписки</title>
+    <title>SHIFT HAPPENS — AI-ассистент для корпоративной переписки</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary: #6a82fb;
+            --secondary: #fc5c7d;
+            --bg: #f5f6fa;
+            --panel: #ffffffcc;
+            --border: #eaeaea;
+            --shadow: 0 2px 16px 0 #bdbdf74d;
+            --radius: 18px;
         }
-
         body {
             font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
-            line-height: 1.6;
+            background: linear-gradient(115deg, #6a82fb 0%, #fc5c7d 100%);
+            min-height: 100vh;
+            color: #222;
+            margin: 0;
         }
-
         .container {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 28px;
         }
-
-        /* Header / Hero Section */
         .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 60px 20px;
+            background: linear-gradient(120deg, #6a82fb 60%, #fc5c7d 100%);
+            color: #fff;
+            padding: 70px 0 30px 0;
+            box-shadow: var(--shadow);
             text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-radius: 0 0 3rem 3rem;
+            position: relative;
+            z-index: 1;
         }
-
         .hero h1 {
-            font-size: 3em;
-            margin-bottom: 15px;
-            font-weight: 700;
+            font-size: 3.5em;
+            font-weight: 800;
+            text-shadow: 0 6px 32px #fc5c7daa;
         }
-
+        .hero h2 {
+            font-size: 1.5em;
+            font-weight: 500;
+            opacity: 0.96;
+        }
         .hero p {
-            font-size: 1.3em;
-            margin-bottom: 30px;
-            opacity: 0.95;
+            font-size: 1.23em;
+            margin: 15px auto 35px;
+            max-width: 450px;
+            opacity: 0.94;
         }
-
         .hero-btn {
-            background: white;
-            color: #667eea;
-            padding: 15px 40px;
+            box-shadow: 0 4px 24px #6a82fb44;
+            background: linear-gradient(95deg, #fff,#f8fafd,#e8f0fe 96%);
+            color: #6a82fb;
+            padding: 18px 46px;
             border: none;
-            border-radius: 30px;
-            font-size: 1.1em;
-            font-weight: 600;
+            border-radius: 50px;
+            font-size: 1.18em;
+            font-weight: 750;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-top: 20px;
+            outline: none;
+            position: relative;
         }
-
         .hero-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 25px rgba(0,0,0,0.3);
+            color: #fff;
+            background: linear-gradient(101deg, #6190e8, #a7bfea 85%);
+            box-shadow: 0 8px 40px #6a82fb42;
         }
-
-        /* Benefits Section */
-        .benefits {
-            background: white;
-            padding: 60px 20px;
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fff2 60%, transparent 100%);
+            left: 52%;
+            top: 30%;
+            z-index: -1;
+            transform: translate(-55%, -35%);
         }
-
-        .benefits h2 {
+        .benefits, .how-it-works {
+            background: var(--bg);
+            padding: 44px 0 30px;
+        }
+        .benefits h2, .how-it-works h2 {
             text-align: center;
-            font-size: 2.5em;
-            margin-bottom: 50px;
-            color: #333;
+            font-size: 2.3em;
+            margin-bottom: 32px;
         }
-
         .benefits-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .benefit-card {
-            background: #f8f9ff;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .benefit-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
-        }
-
-        .benefit-icon {
-            font-size: 3em;
-            margin-bottom: 15px;
-        }
-
-        .benefit-card h3 {
-            font-size: 1.3em;
-            margin-bottom: 10px;
-            color: #667eea;
-        }
-
-        /* How it works */
-        .how-it-works {
-            background: #f8f9ff;
-            padding: 60px 20px;
-        }
-
-        .how-it-works h2 {
-            text-align: center;
-            font-size: 2.5em;
-            margin-bottom: 50px;
-            color: #333;
-        }
-
-        .steps {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            max-width: 900px;
-            margin: 0 auto;
-            gap: 20px;
-        }
-
-        .step {
-            flex: 1;
-            min-width: 200px;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .step-number {
-            width: 60px;
-            height: 60px;
-            background: #667eea;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5em;
-            font-weight: bold;
+            grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+            gap: 28px;
+            max-width: 950px;
             margin: 0 auto 20px;
         }
-
-        /* Generator Section */
+        .benefit-card {
+            background: var(--panel);
+            border-radius: var(--radius);
+            padding: 29px 18px 25px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1.3px solid var(--border);
+            transition: 0.1s;
+        }
+        .benefit-card:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 8px 44px #6a82fb18;
+        }
+        .benefit-icon {
+            font-size: 2.5em;
+            margin-bottom: 8px;
+            color: var(--primary);
+            filter: drop-shadow(0 2px 8px #6a82fb42);
+        }
+        .benefit-card h3 { color: #3746a0; font-size: 1.15em; }
+        .use-cases { background: none; box-shadow: none; }
+        .steps {
+            display: flex; flex-wrap: wrap;
+            justify-content: center;
+            gap: 22px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .step {
+            background: var(--panel);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            min-width: 200px; max-width: 240px; padding: 30px 15px 22px;
+            border: 1.3px solid var(--border);
+            text-align: center;
+        }
+        .step-number {
+            width: 45px; height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(90deg, var(--primary) 70%, var(--secondary));
+            color: #fff;
+            font-weight: 700; font-size: 1.3em;
+            display: inline-flex; align-items: center; justify-content: center;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 12px #fc5c7d33;
+        }
+        
+        /* === GENERATOR PAGE === */
         .generator {
-            background: white;
-            padding: 60px 20px;
+            background: var(--bg);
+            padding: 44px 0 35px;
             min-height: 100vh;
             display: none;
         }
-
-        .generator.active {
-            display: block;
-        }
-
+        .generator.active { display: block; }
         .generator h2 {
             text-align: center;
-            font-size: 2.5em;
-            margin-bottom: 40px;
-            color: #333;
-        }
-
-        .form-container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: #f8f9ff;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-        }
-
-        .form-section {
-            margin-bottom: 35px;
-            padding-bottom: 35px;
-            border-bottom: 2px solid #e0e0e0;
-        }
-
-        .form-section:last-child {
-            border-bottom: none;
-        }
-
-        .form-section h3 {
-            color: #667eea;
-            margin-bottom: 20px;
-            font-size: 1.5em;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #555;
-        }
-
-        .form-group input[type="text"],
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1em;
-            font-family: inherit;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .form-group textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .hint {
-            font-size: 0.9em;
-            color: #888;
-            margin-top: 5px;
-        }
-
-        .api-hint {
-            text-align: center;
-            padding: 10px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 0.95em;
-            font-weight: 500;
-        }
-
-        .api-hint.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .api-hint.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .api-hint {
-            font-size: 0.95em;
-            text-align: center;
-            color: #4a5568;
+            font-size: 2em;
+            color: #343aab;
             margin-bottom: 25px;
         }
-
-        .api-hint.success {
-            color: #2f855a;
-        }
-
-        .api-hint.error {
-            color: #c53030;
-        }
-
-        .radio-group,
-        .checkbox-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 10px;
-        }
-
-        .radio-option,
-        .checkbox-option {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .radio-option input,
-        .checkbox-option input {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .extra-directives {
-            margin-top: 10px;
-        }
-
-        .directive-item {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-            align-items: center;
-        }
-
-        .directive-item input {
-            flex: 1;
-        }
-
-        .btn-remove {
-            background: #ff4444;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9em;
-        }
-
-        .btn-add {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .btn-generate {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 18px 50px;
-            border-radius: 30px;
-            font-size: 1.2em;
-            font-weight: 600;
-            cursor: pointer;
-            display: block;
-            margin: 40px auto 0;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-generate:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
-        }
-
-        .btn-generate:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Loading Spinner */
-        .loading {
-            text-align: center;
-            padding: 40px;
-            display: none;
-        }
-
-        .loading.active {
-            display: block;
-        }
-
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Result Section */
-        .result {
-            max-width: 900px;
-            margin: 40px auto;
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-            display: none;
-        }
-
-        .result.active {
-            display: block;
-        }
-
-        .result h3 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-        }
-
-        .result-subject,
-        .result-body {
-            background: #f8f9ff;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            border: 2px solid #e0e0e0;
-        }
-
-        .result-body {
-            white-space: pre-wrap;
-            line-height: 1.8;
-            min-height: 200px;
-        }
-
-        .result-actions {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .result-btn {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: all 0.3s;
-        }
-
-        .result-btn:hover {
-            background: #5568d3;
-            transform: translateY(-2px);
-        }
-
-        .result-btn.secondary {
-            background: #6c757d;
-        }
-
-        /* Footer */
-        .footer {
-            background: #2c3e50;
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        .footer a {
-            color: #667eea;
-            text-decoration: none;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2em;
-            }
-            
-            .form-container {
-                padding: 20px;
-            }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Navigation */
+        
         .nav-back {
+            margin: 7px 8px 25px 0;
             background: transparent;
             border: 2px solid #667eea;
             color: #667eea;
             padding: 10px 20px;
             border-radius: 8px;
             cursor: pointer;
-            margin: 20px;
             font-size: 1em;
+            transition: all 0.2s;
         }
-
         .nav-back:hover {
             background: #667eea;
             color: white;
         }
+        
+        .api-hint {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1em;
+        }
+        .api-hint.success { color: #22ad55; }
+        .api-hint.error { color: #c53030; }
+        
+        /* Двухколоночная сетка */
+        .form-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .two-column-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .column-left, .column-right {
+            background: var(--panel);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            padding: 24px;
+        }
+        
+        .column-header {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #343aab;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Поля ввода */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            color: #29355c;
+        }
+        
+        .form-group input[type="text"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 14px 16px;
+            border: 1.5px solid #cfd8dc;
+            border-radius: 10px;
+            font-size: 1.05em;
+            font-family: inherit;
+            background: #fff;
+            transition: border 0.2s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border: 2px solid #6a82fb;
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-group select {
+            padding: 15px 16px;
+            font-size: 1.05em;
+            font-weight: 500;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236a82fb' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+        }
+        
+        .hint {
+            font-size: 0.95em;
+            color: #777;
+            margin-top: 6px;
+        }
+        
+        /* Параметры */
+        .param-section {
+            margin-bottom: 22px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .param-section:last-child {
+            border-bottom: none;
+        }
+        
+        .param-label {
+            font-weight: 700;
+            font-size: 1.05em;
+            margin-bottom: 10px;
+            color: #29355c;
+        }
+        
+        .radio-group,
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .radio-group label,
+        .checkbox-group label {
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .radio-group input[type="radio"],
+        .checkbox-group input[type="checkbox"] {
+            accent-color: #6a82fb;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+        
+        /* Дополнительные указания */
+        .directive-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+        
+        .directive-item input {
+            flex: 1;
+        }
+        
+        .btn-add {
+            background: linear-gradient(95deg,#6a82fb 50%,#fc5c7d 100%);
+            color: #fff;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.95em;
+            padding: 10px 28px;
+            margin: 10px 0 0 0;
+            cursor: pointer;
+            box-shadow: 0 2px 12px #fc5c7d28;
+            transition: background 0.2s;
+        }
+        
+        .btn-add:hover {
+            background: linear-gradient(95deg,#fc5c7d 55%,#6a82fb 100%);
+        }
+        
+        .btn-remove {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+        
+        /* Кнопка генерации */
+        .btn-generate {
+            background: linear-gradient(95deg,#6a82fb 50%,#fc5c7d 100%);
+            color: #fff;
+            font-weight: 700;
+            border: none;
+            border-radius: 24px;
+            font-size: 1.15em;
+            padding: 18px 70px;
+            margin: 20px auto;
+            cursor: pointer;
+            display: block;
+            box-shadow: 0 4px 20px #6a82fb40;
+            transition: 0.2s;
+        }
+        
+        .btn-generate:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px #6a82fb60;
+        }
+        
+        .btn-generate:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* Результат */
+        .result-container {
+            display: none;
+        }
+        
+        .result-container.active {
+            display: block;
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .result-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-icon {
+            background: #e8eaf6;
+            border: 1.5px solid #c5cae9;
+            color: #6a82fb;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            padding: 8px 16px;
+            transition: all 0.2s;
+        }
+        
+        .btn-icon:hover {
+            color: #fff;
+            background: linear-gradient(90deg,#6a82fb,#fc5c7d);
+            border-color: transparent;
+        }
+        
+        .result-field {
+            background: #f5f6fa;
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin-bottom: 18px;
+            border: 1.5px solid #d2dae6;
+            min-height: 40px;
+            font-size: 1.05em;
+        }
+        
+        .result-field[contenteditable="true"]:focus {
+            outline: none;
+            border: 2px solid #6a82fb;
+            background: #fff;
+        }
+        
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+        
+        .loading.active {
+            display: block;
+        }
+        
+        .spinner {
+            border: 3.5px solid #f3f3f3;
+            border-top: 3.5px solid #667eea;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 36px 20px;
+            text-align: center;
+        }
+        
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        @media (max-width: 1100px) {
+            .two-column-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width:680px) {
+            .hero h1 { font-size: 2em; }
+            .container { padding: 0 6px; }
+        }
     </style>
 </head>
 <body>
-    <!-- HOMEPAGE -->
     <div id="homepage">
-        <!-- Hero Section -->
         <section class="hero">
             <div class="container">
-                <h1>📧 BizMail</h1>
+                <h1>SHIFT HAPPENS</h1>
                 <h2>AI-ассистент для корпоративной переписки</h2>
                 <p>Генерируйте профессиональные деловые письма за секунды</p>
                 <button class="hero-btn" onclick="showGenerator()">Создать письмо</button>
             </div>
         </section>
-
-        <!-- Benefits Section -->
         <section class="benefits">
             <div class="container">
                 <h2>Преимущества</h2>
@@ -537,8 +527,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- How It Works -->
         <section class="how-it-works">
             <div class="container">
                 <h2>Как это работает</h2>
@@ -561,9 +549,7 @@
                 </div>
             </div>
         </section>
-
-        <!-- Use Cases -->
-        <section class="benefits">
+        <section class="benefits use-cases">
             <div class="container">
                 <h2>Примеры использования</h2>
                 <div class="benefits-grid">
@@ -586,8 +572,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Footer -->
         <footer class="footer">
             <div class="container">
                 <p>&copy; 2025 BizMail. Команда SHIFT HAPPENS x MISIS</p>
@@ -595,320 +579,253 @@
             </div>
         </footer>
     </div>
-
+    
     <!-- GENERATOR PAGE -->
     <div id="generatorPage" class="generator">
         <button class="nav-back" onclick="showHomepage()">← Вернуться на главную</button>
-        
         <div class="container">
             <h2>Генерация письма</h2>
             <p class="api-hint" id="apiStatus"></p>
-
+            
             <div class="form-container">
-                <form id="emailForm">
-                    <!-- Блок 1: Исходное письмо -->
-                    <div class="form-section">
-                        <h3>📨 Исходное письмо</h3>
-                        <div class="form-group">
-                            <label for="source_subject">Тема письма</label>
-                            <input type="text" id="source_subject" placeholder="Введите тему входящего письма" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="source_body">Текст письма</label>
-                            <textarea id="source_body" placeholder="Вставьте текст входящего письма или опишите задачу" required></textarea>
-                        </div>
-                    </div>
-
-                    <!-- Блок 2: Корпоративный контекст -->
-                    <div class="form-section">
-                        <h3>🏢 Корпоративный контекст</h3>
-                        <div class="form-group">
-                            <label for="company_context">Контекст компании</label>
-                            <textarea id="company_context" placeholder="Например: ПАО Банк. Соблюдаем строгий деловой стиль." required></textarea>
-                            <div class="hint">Эта информация будет использоваться во всех письмах</div>
-                        </div>
-                    </div>
-
-                    <!-- Блок 3: Данные отправителя -->
-                    <div class="form-section">
-                        <h3>👤 Данные отправителя</h3>
-                        <div class="form-row">
+                <form id="emailForm" autocomplete="off">
+                    <div class="two-column-grid">
+                        <!-- Левая колонка: Исходное письмо -->
+                        <div class="column-left">
+                            <div class="column-header">📨 Исходное письмо</div>
                             <div class="form-group">
-                                <label for="sender_first_name">Имя (опционально)</label>
-                                <input type="text" id="sender_first_name" placeholder="Анна">
+                                <label for="source_subject">Тема письма</label>
+                                <input type="text" id="source_subject" required placeholder="Введите тему входящего письма">
                             </div>
                             <div class="form-group">
-                                <label for="sender_last_name">Фамилия (опционально)</label>
-                                <input type="text" id="sender_last_name" placeholder="Иванова">
+                                <label for="source_body">Текст письма</label>
+                                <textarea id="source_body" required placeholder="Вставьте текст входящего письма или опишите задачу" style="min-height: 200px;"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="company_context">Контекст компании</label>
+                                <textarea id="company_context" required placeholder="Например: ПАО Банк. Соблюдаем строгий деловой стиль." style="min-height: 100px;"></textarea>
+                                <div class="hint">Эта информация будет использоваться во всех письмах</div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="sender_position">Должность (опционально)</label>
-                            <input type="text" id="sender_position" placeholder="Начальник управления">
-                        </div>
-                        <div class="hint">Эти данные будут использованы в подписи письма</div>
-                    </div>
-
-                    <!-- Блок 4: Параметры стилизации -->
-                    <div class="form-section">
-                        <h3>⚙️ Параметры стилизации</h3>
                         
-                        <div class="form-group">
-                            <label>Тон письма</label>
-                            <div class="radio-group">
-                                <div class="radio-option">
-                                    <input type="radio" name="tone" value="formal" id="tone_formal" checked>
-                                    <label for="tone_formal">Формальный</label>
+                        <!-- Правая колонка: Параметры или Результат -->
+                        <div class="column-right">
+                            <!-- Параметры (по умолчанию) -->
+                            <div id="parametersContainer">
+                                <div class="column-header">⚙️ Параметры генерации</div>
+                                
+                                <div class="param-section">
+                                    <div class="param-label">Тон письма</div>
+                                    <div class="radio-group">
+                                        <label><input type="radio" name="tone" value="formal" checked> Формальный</label>
+                                        <label><input type="radio" name="tone" value="neutral"> Нейтральный</label>
+                                        <label><input type="radio" name="tone" value="friendly"> Дружелюбный</label>
+                                    </div>
                                 </div>
-                                <div class="radio-option">
-                                    <input type="radio" name="tone" value="neutral" id="tone_neutral">
-                                    <label for="tone_neutral">Нейтральный</label>
+                                
+                                <div class="param-section">
+                                    <div class="param-label">Длина письма</div>
+                                    <div class="radio-group">
+                                        <label><input type="radio" name="length" value="short" checked> 3-4 предложения</label>
+                                        <label><input type="radio" name="length" value="medium"> 5-8 предложений</label>
+                                        <label><input type="radio" name="length" value="long"> 8-12 предложений</label>
+                                    </div>
                                 </div>
-                                <div class="radio-option">
-                                    <input type="radio" name="tone" value="friendly" id="tone_friendly">
-                                    <label for="tone_friendly">Дружелюбный</label>
+                                
+                                <div class="param-section">
+                                    <div class="param-label">Цель письма</div>
+                                    <select id="purpose">
+                                        <option value="response">Ответ</option>
+                                        <option value="proposal">Предложение</option>
+                                        <option value="notification">Уведомление</option>
+                                        <option value="refusal">Отказ</option>
+                                    </select>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="purpose">Цель письма</label>
-                                <select id="purpose">
-                                    <option value="response">Ответ</option>
-                                    <option value="proposal">Предложение</option>
-                                    <option value="notification">Уведомление</option>
-                                    <option value="refusal">Отказ</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="audience">Аудитория</label>
-                                <select id="audience">
-                                    <option value="colleague">Коллега</option>
-                                    <option value="manager">Руководитель</option>
-                                    <option value="client">Клиент</option>
-                                    <option value="partner">Партнер</option>
-                                    <option value="regulator">Регулятор</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Длина письма</label>
-                            <div class="radio-group">
-                                <div class="radio-option">
-                                    <input type="radio" name="length" value="short" id="length_short" checked>
-                                    <label for="length_short">Короткое (3-4 предложения)</label>
+                                
+                                <div class="param-section">
+                                    <div class="param-label">Аудитория</div>
+                                    <select id="audience">
+                                        <option value="colleague">Коллега</option>
+                                        <option value="manager">Руководитель</option>
+                                        <option value="client">Клиент</option>
+                                        <option value="partner">Партнер</option>
+                                        <option value="regulator">Регулятор</option>
+                                    </select>
                                 </div>
-                                <div class="radio-option">
-                                    <input type="radio" name="length" value="medium" id="length_medium">
-                                    <label for="length_medium">Среднее (5-8 предложений)</label>
+                                
+                                <div class="param-section">
+                                    <div class="param-label">Стиль обращения</div>
+                                    <div class="radio-group">
+                                        <label><input type="radio" name="address_style" value="vy" checked> "Вы"</label>
+                                        <label><input type="radio" name="address_style" value="ty"> "ты"</label>
+                                        <label><input type="radio" name="address_style" value="full_name"> Полное имя</label>
+                                    </div>
                                 </div>
-                                <div class="radio-option">
-                                    <input type="radio" name="length" value="long" id="length_long">
-                                    <label for="length_long">Длинное (8-12 предложений)</label>
+                                
+                                <div class="param-section">
+                                    <div class="param-label">Срочность</div>
+                                    <select id="urgency">
+                                        <option value="low">Низкая</option>
+                                        <option value="normal" selected>Обычная</option>
+                                        <option value="high">Высокая</option>
+                                    </select>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Стиль обращения</label>
-                            <div class="radio-group">
-                                <div class="radio-option">
-                                    <input type="radio" name="address_style" value="vy" id="address_vy" checked>
-                                    <label for="address_vy">На "Вы"</label>
+                                
+                                <div class="param-section">
+                                    <div class="param-label">Дополнительные опции</div>
+                                    <div class="checkbox-group">
+                                        <label><input type="checkbox" id="include_formal_greetings" checked> Формальные приветствия</label>
+                                        <label><input type="checkbox" id="include_greeting_and_signoff" checked> Приветствие и заключение</label>
+                                        <label><input type="checkbox" id="include_corporate_phrases" checked> Корпоративные фразы</label>
+                                    </div>
                                 </div>
-                                <div class="radio-option">
-                                    <input type="radio" name="address_style" value="ty" id="address_ty">
-                                    <label for="address_ty">На "ты"</label>
+                                
+                                <div class="param-section">
+                                    <div class="param-label">Данные отправителя (опционально)</div>
+                                    <div class="form-group" style="margin-bottom: 12px;">
+                                        <input type="text" id="sender_first_name" placeholder="Имя">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 12px;">
+                                        <input type="text" id="sender_last_name" placeholder="Фамилия">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <input type="text" id="sender_position" placeholder="Должность">
+                                    </div>
                                 </div>
-                                <div class="radio-option">
-                                    <input type="radio" name="address_style" value="full_name" id="address_full">
-                                    <label for="address_full">Полное имя</label>
+                                
+                                <div class="param-section">
+                                    <div class="param-label">Дополнительные указания</div>
+                                    <div id="extraDirectives"></div>
+                                    <button type="button" class="btn-add" onclick="addDirective()">+ Добавить</button>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="urgency">Срочность</label>
-                            <select id="urgency">
-                                <option value="low">Низкая</option>
-                                <option value="normal" selected>Обычная</option>
-                                <option value="high">Высокая</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Дополнительные опции</label>
-                            <div class="checkbox-group">
-                                <div class="checkbox-option">
-                                    <input type="checkbox" id="include_formal_greetings" checked>
-                                    <label for="include_formal_greetings">Формальные приветствия</label>
-                                </div>
-                                <div class="checkbox-option">
-                                    <input type="checkbox" id="include_greeting_and_signoff" checked>
-                                    <label for="include_greeting_and_signoff">Приветствие и заключение</label>
-                                </div>
-                                <div class="checkbox-option">
-                                    <input type="checkbox" id="include_corporate_phrases" checked>
-                                    <label for="include_corporate_phrases">Корпоративные фразы</label>
+                                
+                                <div class="param-section">
+                                    <div class="param-label">Дополнительное описание задачи</div>
+                                    <textarea id="custom_prompt" placeholder="Оставьте пустым, если не требуется" style="min-height: 80px;"></textarea>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Дополнительные указания</label>
-                            <div class="extra-directives" id="extraDirectives"></div>
-                            <button type="button" class="btn-add" onclick="addDirective()">+ Добавить указание</button>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="custom_prompt">Дополнительное описание задачи</label>
-                            <textarea id="custom_prompt" placeholder="Оставьте пустым, если не требуется дополнительных указаний"></textarea>
-                            <div class="hint">Используйте только для явного описания задачи или цели письма</div>
+                            
+                            <!-- Результат (скрыт по умолчанию) -->
+                            <div id="resultContainer" class="result-container">
+                                <div class="result-header">
+                                    <div class="column-header">✉️ Результат генерации</div>
+                                    <div class="result-actions">
+                                        <button type="button" class="btn-icon" onclick="copyResult()">📋 Копировать</button>
+                                        <button type="button" class="btn-icon" onclick="clearResult()">🗑️ Удалить</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Тема письма</label>
+                                    <div class="result-field" id="resultSubject" contenteditable="true"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Текст письма</label>
+                                    <div class="result-field" id="resultBody" contenteditable="true" style="min-height: 250px;"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
+                    
+                    <!-- Кнопка генерации -->
                     <button type="submit" class="btn-generate" id="generateBtn">Сгенерировать письмо</button>
-                </form>
-
-                <div class="loading" id="loading">
-                    <div class="spinner"></div>
-                    <p>Генерируем ваше письмо...</p>
-                </div>
-
-                <div class="result" id="result">
-                    <h3>📧 Тема письма:</h3>
-                    <div class="result-subject" id="resultSubject" contenteditable="true"></div>
-
-                    <h3>📝 Текст письма:</h3>
-                    <div class="result-body" id="resultBody" contenteditable="true"></div>
-
-                    <div class="result-actions">
-                        <button class="result-btn" onclick="copyResult()">📋 Копировать всё</button>
-                        <button class="result-btn" onclick="copySubject()">Копировать тему</button>
-                        <button class="result-btn" onclick="copyBody()">Копировать текст</button>
-                        <button class="result-btn secondary" onclick="generateAgain()">🔄 Сгенерировать заново</button>
+                    
+                    <!-- Loading -->
+                    <div class="loading" id="loading">
+                        <div class="spinner"></div>
+                        <p>Генерируем ваше письмо...</p>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
-
+    
     <script>
-        // API Configuration
         const resolveApiBase = () => {
             const meta = document.querySelector('meta[name="bizmail-api-base"]');
-            if (meta?.content) {
-                return meta.content.replace(/\/$/, '');
-            }
-
-            if (window.location.origin && window.location.origin.startsWith('http')) {
-                return window.location.origin.replace(/\/$/, '');
-            }
-
+            if (meta?.content) return meta.content.replace(/\/$/, '');
+            if (window.location.origin && window.location.origin.startsWith('http')) return window.location.origin.replace(/\/$/, '');
             return 'http://localhost:8001';
         };
-
+        
         const API_BASE_URL = resolveApiBase();
         const apiStatusEl = document.getElementById('apiStatus');
-
-        const updateApiStatus = (message, state) => {
+        
+        const updateApiStatus = (msg, state) => {
             if (!apiStatusEl) return;
-            apiStatusEl.textContent = message;
+            apiStatusEl.textContent = msg;
             apiStatusEl.classList.remove('success', 'error');
-            if (state) {
-                apiStatusEl.classList.add(state);
-            }
+            if (state) apiStatusEl.classList.add(state);
         };
-
+        
         const verifyBackend = async () => {
             updateApiStatus(`Пробуем подключиться к API (${API_BASE_URL})...`);
             try {
-                const res = await fetch(`${API_BASE_URL}/health`, { method: 'GET' });
-                if (!res.ok) {
-                    throw new Error(`Health check failed with ${res.status}`);
-                }
+                const res = await fetch(`${API_BASE_URL}/health`);
+                if (!res.ok) throw new Error(`Health check failed with ${res.status}`);
                 updateApiStatus(`Бэкенд подключен (${API_BASE_URL})`, 'success');
-            } catch (error) {
-                console.error('Health check error:', error);
+            } catch (e) {
                 updateApiStatus(`Нет связи с сервером по адресу ${API_BASE_URL}`, 'error');
             }
         };
-
+        
         verifyBackend();
-
-        const showResult = (subject, body) => {
-            document.getElementById('resultSubject').textContent = subject;
-            document.getElementById('resultBody').textContent = body;
-            document.getElementById('result').classList.add('active');
-        };
-
-        const showError = (message) => {
-            showResult('Ошибка генерации', message);
-        };
-
-        const getRequiredValue = (id) => document.getElementById(id).value.trim();
-
-        const getOptionalValue = (id) => {
-            const value = document.getElementById(id).value.trim();
-            return value === '' ? null : value;
-        };
-
-        // Navigation
+        
         function showGenerator() {
             document.getElementById('homepage').style.display = 'none';
             document.getElementById('generatorPage').classList.add('active');
+            setTimeout(()=>{window.scrollTo(0,0);},50);
         }
-
+        
         function showHomepage() {
             document.getElementById('homepage').style.display = 'block';
             document.getElementById('generatorPage').classList.remove('active');
-            document.getElementById('result').classList.remove('active');
+            clearResult();
         }
-
-        // Directives Management
+        
         let directiveCount = 0;
-
+        
         function addDirective() {
             directiveCount++;
             const container = document.getElementById('extraDirectives');
             const div = document.createElement('div');
             div.className = 'directive-item';
             div.id = `directive-${directiveCount}`;
-            div.innerHTML = `
-                <input type="text" placeholder="Введите указание" class="directive-input">
-                <button type="button" class="btn-remove" onclick="removeDirective(${directiveCount})">Удалить</button>
-            `;
+            div.innerHTML = `<input type="text" placeholder="Введите указание" class="directive-input"> <button type="button" class="btn-remove" onclick="removeDirective(${directiveCount})">✕</button>`;
             container.appendChild(div);
         }
-
+        
         function removeDirective(id) {
-            document.getElementById(`directive-${id}`).remove();
+            document.getElementById(`directive-${id}`)?.remove();
         }
-
-        // Form Submission
+        
+        function clearResult() {
+            document.getElementById('parametersContainer').style.display = 'block';
+            document.getElementById('resultContainer').classList.remove('active');
+            document.getElementById('generateBtn').textContent = 'Сгенерировать письмо';
+        }
+        
+        function showResult() {
+            document.getElementById('parametersContainer').style.display = 'none';
+            document.getElementById('resultContainer').classList.add('active');
+            document.getElementById('generateBtn').textContent = 'Сгенерировать ещё раз';
+        }
+        
         document.getElementById('emailForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-
-            // Collect directives
+            
             const directives = [];
             document.querySelectorAll('.directive-input').forEach(input => {
-                if (input.value.trim()) {
-                    directives.push(input.value.trim());
-                }
+                if (input.value.trim()) directives.push(input.value.trim());
             });
-
-            // Prepare request data according to your backend schema
+            
             const requestData = {
-                source_subject: getRequiredValue('source_subject'),
-                source_body: getRequiredValue('source_body'),
-                company_context: getRequiredValue('company_context'),
-                sender_first_name: getOptionalValue('sender_first_name'),
-                sender_last_name: getOptionalValue('sender_last_name'),
-                sender_position: getOptionalValue('sender_position'),
-                custom_prompt: getOptionalValue('custom_prompt'),
+                source_subject: document.getElementById('source_subject').value.trim(),
+                source_body: document.getElementById('source_body').value.trim(),
+                company_context: document.getElementById('company_context').value.trim(),
+                sender_first_name: document.getElementById('sender_first_name').value.trim() || null,
+                sender_last_name: document.getElementById('sender_last_name').value.trim() || null,
+                sender_position: document.getElementById('sender_position').value.trim() || null,
+                custom_prompt: document.getElementById('custom_prompt').value.trim() || null,
                 parameters: {
                     tone: document.querySelector('input[name="tone"]:checked').value,
                     purpose: document.getElementById('purpose').value,
@@ -922,77 +839,50 @@
                     extra_directives: directives.length ? directives : null
                 }
             };
-
-            // Show loading
+            
             document.getElementById('generateBtn').disabled = true;
             document.getElementById('loading').classList.add('active');
-            document.getElementById('result').classList.remove('active');
-
+            
             try {
                 const response = await fetch(`${API_BASE_URL}/api/emails/generate`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(requestData)
                 });
-
+                
                 if (!response.ok) {
-                    let errorDetails = `HTTP ${response.status}`;
+                    let err = `HTTP ${response.status}`;
                     try {
                         const payload = await response.json();
-                        if (payload.detail) {
-                            if (typeof payload.detail === 'string') {
-                                errorDetails = payload.detail;
-                            } else if (Array.isArray(payload.detail)) {
-                                errorDetails = payload.detail.map(item => item.msg || item).join(', ');
-                            }
-                        } else if (payload.message) {
-                            errorDetails = payload.message;
-                        }
-                    } catch (parseError) {
-                        console.warn('Failed to parse error payload', parseError);
-                    }
-                    throw new Error(errorDetails);
+                        if (payload.detail) err = typeof payload.detail === 'string' ? payload.detail : Array.isArray(payload.detail) ? payload.detail.map(item=>item.msg||item).join(', ') : err;
+                        else if (payload.message) err = payload.message;
+                    } catch {}
+                    throw new Error(err);
                 }
-
+                
                 const data = await response.json();
-                showResult(data.subject, data.body);
+                document.getElementById('resultSubject').textContent = data.subject;
+                document.getElementById('resultBody').textContent = data.body;
+                showResult();
             } catch (error) {
-                console.error('Generation error:', error);
-                showError(`Не удалось сгенерировать письмо: ${error.message}`);
-            } finally {
-                document.getElementById('loading').classList.remove('active');
-                document.getElementById('generateBtn').disabled = false;
+                document.getElementById('resultSubject').textContent = 'Ошибка генерации';
+                document.getElementById('resultBody').textContent = error.message || 'Не удалось сгенерировать письмо.';
+                showResult();
             }
+            
+            document.getElementById('loading').classList.remove('active');
+            document.getElementById('generateBtn').disabled = false;
         });
-
-        // Copy functions
+        
         function copyResult() {
             const subject = document.getElementById('resultSubject').textContent;
             const body = document.getElementById('resultBody').textContent;
             const text = `Тема: ${subject}\n\n${body}`;
-            navigator.clipboard.writeText(text).then(() => {
-                alert('✅ Письмо скопировано в буфер обмена!');
+            navigator.clipboard.writeText(text).then(()=>{
+                const btns = document.querySelectorAll('.btn-icon');
+                btns[0].textContent = '✔ Скопировано';
+                setTimeout(()=>{btns[0].textContent='📋 Копировать';},1500);
             });
-        }
-
-        function copySubject() {
-            const text = document.getElementById('resultSubject').textContent;
-            navigator.clipboard.writeText(text).then(() => {
-                alert('✅ Тема скопирована!');
-            });
-        }
-
-        function copyBody() {
-            const text = document.getElementById('resultBody').textContent;
-            navigator.clipboard.writeText(text).then(() => {
-                alert('✅ Текст письма скопирован!');
-            });
-        }
-
-        function generateAgain() {
-            document.getElementById('emailForm').requestSubmit();
         }
     </script>
 </body>
