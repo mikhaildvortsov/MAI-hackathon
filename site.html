@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BizMail — AI-ассистент для корпоративной переписки</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header / Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .hero-btn {
+            background: white;
+            color: #667eea;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Benefits Section */
+        .benefits {
+            background: white;
+            padding: 60px 20px;
+        }
+
+        .benefits h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            color: #333;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .benefit-card {
+            background: #f8f9ff;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .benefit-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+
+        /* How it works */
+        .how-it-works {
+            background: #f8f9ff;
+            padding: 60px 20px;
+        }
+
+        .how-it-works h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            color: #333;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            max-width: 900px;
+            margin: 0 auto;
+            gap: 20px;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+
+        /* Generator Section */
+        .generator {
+            background: white;
+            padding: 60px 20px;
+            min-height: 100vh;
+            display: none;
+        }
+
+        .generator.active {
+            display: block;
+        }
+
+        .generator h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        .form-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #f8f9ff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .form-section {
+            margin-bottom: 35px;
+            padding-bottom: 35px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+        }
+
+        .form-section h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input[type="text"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .hint {
+            font-size: 0.9em;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .radio-group,
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .radio-option,
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .radio-option input,
+        .checkbox-option input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .extra-directives {
+            margin-top: 10px;
+        }
+
+        .directive-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .directive-item input {
+            flex: 1;
+        }
+
+        .btn-remove {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .btn-add {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-generate {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            border-radius: 30px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            display: block;
+            margin: 40px auto 0;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-generate:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-generate:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Loading Spinner */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Result Section */
+        .result {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .result.active {
+            display: block;
+        }
+
+        .result h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .result-subject,
+        .result-body {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .result-body {
+            white-space: pre-wrap;
+            line-height: 1.8;
+            min-height: 200px;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .result-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .result-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .result-btn.secondary {
+            background: #6c757d;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Navigation */
+        .nav-back {
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 20px;
+            font-size: 1em;
+        }
+
+        .nav-back:hover {
+            background: #667eea;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- HOMEPAGE -->
+    <div id="homepage">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1>📧 BizMail</h1>
+                <h2>AI-ассистент для корпоративной переписки</h2>
+                <p>Генерируйте профессиональные деловые письма за секунды</p>
+                <button class="hero-btn" onclick="showGenerator()">Создать письмо</button>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="benefits">
+            <div class="container">
+                <h2>Преимущества</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">⚡️</div>
+                        <h3>Быстрая генерация</h3>
+                        <p>Создавайте письма за секунды, экономьте часы работы</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🎯</div>
+                        <h3>Корпоративный стиль</h3>
+                        <p>Соответствие стандартам вашей компании</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🔒</div>
+                        <h3>Безопасность данных</h3>
+                        <p>Защита конфиденциальной информации</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">📝</div>
+                        <h3>Множество стилей</h3>
+                        <p>Шаблоны для любых деловых ситуаций</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="how-it-works">
+            <div class="container">
+                <h2>Как это работает</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Введите исходное письмо</h3>
+                        <p>Вставьте текст письма или опишите задачу</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Настройте параметры</h3>
+                        <p>Выберите тон, цель и стиль письма</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Получите результат</h3>
+                        <p>Готовый черновик за несколько секунд</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section class="benefits">
+            <div class="container">
+                <h2>Примеры использования</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <h3>Ответы регуляторам</h3>
+                        <p>Формальные ответы контролирующим органам</p>
+                    </div>
+                    <div class="benefit-card">
+                        <h3>Коммерческие предложения</h3>
+                        <p>Убедительные предложения для партнеров</p>
+                    </div>
+                    <div class="benefit-card">
+                        <h3>Внутренние уведомления</h3>
+                        <p>Информирование команды и коллег</p>
+                    </div>
+                    <div class="benefit-card">
+                        <h3>Деловые письма</h3>
+                        <p>Любая корпоративная переписка</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2025 BizMail. Команда SHIFT HAPPENS x MISIS</p>
+                <p><a href="https://github.com/mikhaildvortsov/MAI-hackathon">GitHub</a> | Политика конфиденциальности</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- GENERATOR PAGE -->
+    <div id="generatorPage" class="generator">
+        <button class="nav-back" onclick="showHomepage()">← Вернуться на главную</button>
+        
+        <div class="container">
+            <h2>Генерация письма</h2>
+
+            <div class="form-container">
+                <form id="emailForm">
+                    <!-- Блок 1: Исходное письмо -->
+                    <div class="form-section">
+                        <h3>📨 Исходное письмо</h3>
+                        <div class="form-group">
+                            <label for="source_subject">Тема письма</label>
+                            <input type="text" id="source_subject" placeholder="Введите тему входящего письма" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="source_body">Текст письма</label>
+                            <textarea id="source_body" placeholder="Вставьте текст входящего письма или опишите задачу" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Блок 2: Корпоративный контекст -->
+                    <div class="form-section">
+                        <h3>🏢 Корпоративный контекст</h3>
+                        <div class="form-group">
+                            <label for="company_context">Контекст компании</label>
+                            <textarea id="company_context" placeholder="Например: ПАО Банк. Соблюдаем строгий деловой стиль."></textarea>
+                            <div class="hint">Эта информация будет использоваться во всех письмах</div>
+                        </div>
+                    </div>
+
+                    <!-- Блок 3: Данные отправителя -->
+                    <div class="form-section">
+                        <h3>👤 Данные отправителя</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="sender_first_name">Имя (опционально)</label>
+                                <input type="text" id="sender_first_name" placeholder="Анна">
+                            </div>
+                            <div class="form-group">
+                                <label for="sender_last_name">Фамилия (опционально)</label>
+                                <input type="text" id="sender_last_name" placeholder="Иванова">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="sender_position">Должность (опционально)</label>
+                            <input type="text" id="sender_position" placeholder="Начальник управления">
+                        </div>
+                        <div class="hint">Эти данные будут использованы в подписи письма</div>
+                    </div>
+
+                    <!-- Блок 4: Параметры стилизации -->
+                    <div class="form-section">
+                        <h3>⚙️ Параметры стилизации</h3>
+                        
+                        <div class="form-group">
+                            <label>Тон письма</label>
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" name="tone" value="formal" id="tone_formal" checked>
+                                    <label for="tone_formal">Формальный</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" name="tone" value="neutral" id="tone_neutral">
+                                    <label for="tone_neutral">Нейтральный</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" name="tone" value="friendly" id="tone_friendly">
+                                    <label for="tone_friendly">Дружелюбный</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="purpose">Цель письма</label>
+                                <select id="purpose">
+                                    <option value="response">Ответ</option>
+                                    <option value="proposal">Предложение</option>
+                                    <option value="notification">Уведомление</option>
+                                    <option value="refusal">Отказ</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="audience">Аудитория</label>
+                                <select id="audience">
+                                    <option value="colleague">Коллега</option>
+                                    <option value="manager">Руководитель</option>
+                                    <option value="client">Клиент</option>
+                                    <option value="partner">Партнер</option>
+                                    <option value="regulator">Регулятор</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Длина письма</label>
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" name="length" value="short" id="length_short" checked>
+                                    <label for="length_short">Короткое (3-4 предложения)</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" name="length" value="medium" id="length_medium">
+                                    <label for="length_medium">Среднее (5-8 предложений)</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" name="length" value="long" id="length_long">
+                                    <label for="length_long">Длинное (8-12 предложений)</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Стиль обращения</label>
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" name="address_style" value="vy" id="address_vy" checked>
+                                    <label for="address_vy">На "Вы"</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" name="address_style" value="ty" id="address_ty">
+                                    <label for="address_ty">На "ты"</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" name="address_style" value="full_name" id="address_full">
+                                    <label for="address_full">Полное имя</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="urgency">Срочность</label>
+                            <select id="urgency">
+                                <option value="low">Низкая</option>
+                                <option value="normal" selected>Обычная</option>
+                                <option value="high">Высокая</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Дополнительные опции</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="include_formal_greetings" checked>
+                                    <label for="include_formal_greetings">Формальные приветствия</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="include_greeting_and_signoff" checked>
+                                    <label for="include_greeting_and_signoff">Приветствие и заключение</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="include_corporate_phrases" checked>
+                                    <label for="include_corporate_phrases">Корпоративные фразы</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Дополнительные указания</label>
+                            <div class="extra-directives" id="extraDirectives"></div>
+                            <button type="button" class="btn-add" onclick="addDirective()">+ Добавить указание</button>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="custom_prompt">Дополнительное описание задачи</label>
+                            <textarea id="custom_prompt" placeholder="Оставьте пустым, если не требуется дополнительных указаний"></textarea>
+                            <div class="hint">Используйте только для явного описания задачи или цели письма</div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-generate" id="generateBtn">Сгенерировать письмо</button>
+                </form>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Генерируем ваше письмо...</p>
+                </div>
+
+                <div class="result" id="result">
+                    <h3>📧 Тема письма:</h3>
+                    <div class="result-subject" id="resultSubject" contenteditable="true"></div>
+
+                    <h3>📝 Текст письма:</h3>
+                    <div class="result-body" id="resultBody" contenteditable="true"></div>
+
+                    <div class="result-actions">
+                        <button class="result-btn" onclick="copyResult()">📋 Копировать всё</button>
+                        <button class="result-btn" onclick="copySubject()">Копировать тему</button>
+                        <button class="result-btn" onclick="copyBody()">Копировать текст</button>
+                        <button class="result-btn secondary" onclick="generateAgain()">🔄 Сгенерировать заново</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API Configuration
+        const API_BASE_URL = 'http://localhost:8000';
+
+        // Navigation
+        function showGenerator() {
+            document.getElementById('homepage').style.display = 'none';
+            document.getElementById('generatorPage').classList.add('active');
+        }
+
+        function showHomepage() {
+            document.getElementById('homepage').style.display = 'block';
+            document.getElementById('generatorPage').classList.remove('active');
+            document.getElementById('result').classList.remove('active');
+        }
+
+        // Directives Management
+        let directiveCount = 0;
+
+        function addDirective() {
+            directiveCount++;
+            const container = document.getElementById('extraDirectives');
+            const div = document.createElement('div');
+            div.className = 'directive-item';
+            div.id = `directive-${directiveCount}`;
+            div.innerHTML = `
+                <input type="text" placeholder="Введите указание" class="directive-input">
+                <button type="button" class="btn-remove" onclick="removeDirective(${directiveCount})">Удалить</button>
+            `;
+            container.appendChild(div);
+        }
+
+        function removeDirective(id) {
+            document.getElementById(`directive-${id}`).remove();
+        }
+
+        // Form Submission
+        document.getElementById('emailForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Collect directives
+            const directives = [];
+            document.querySelectorAll('.directive-input').forEach(input => {
+                if (input.value.trim()) {
+                    directives.push(input.value.trim());
+                }
+            });
+
+            // Prepare request data according to your backend schema
+            const requestData = {
+                source_subject: document.getElementById('source_subject').value,
+                source_body: document.getElementById('source_body').value,
+                company_context: document.getElementById('company_context').value || '',
+                sender_first_name: document.getElementById('sender_first_name').value || '',
+                sender_last_name: document.getElementById('sender_last_name').value || '',
+                sender_position: document.getElementById('sender_position').value || '',
+                custom_prompt: document.getElementById('custom_prompt').value || '',
+                parameters: {
+                    tone: document.querySelector('input[name="tone"]:checked').value,
+                    purpose: document.getElementById('purpose').value,
+                    length: document.querySelector('input[name="length"]:checked').value,
+                    audience: document.getElementById('audience').value,
+                    address_style: document.querySelector('input[name="address_style"]:checked').value,
+                    include_formal_greetings: document.getElementById('include_formal_greetings').checked,
+                    include_greeting_and_signoff: document.getElementById('include_greeting_and_signoff').checked,
+                    urgency: document.getElementById('urgency').value,
+                    include_corporate_phrases: document.getElementById('include_corporate_phrases').checked,
+                    extra_directives: directives
+                }
+            };
+
+            // Show loading
+            document.getElementById('generateBtn').disabled = true;
+            document.getElementById('loading').classList.add('active');
+            document.getElementById('result').classList.remove('active');
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/emails/generate`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestData)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                // Display results
+                document.getElementById('resultSubject').textContent = data.subject;
+                document.getElementById('resultBody').textContent = data.body;
+                document.getElementById('result').classList.add('active');
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Ошибка при генерации письма. Убедитесь, что backend запущен на http://localhost:8000');
+            } finally {
+                document.getElementById('loading').classList.remove('active');
+                document.getElementById('generateBtn').disabled = false;
+            }
+        });
+
+        // Copy functions
+        function copyResult() {
+            const subject = document.getElementById('resultSubject').textContent;
+            const body = document.getElementById('resultBody').textContent;
+            const text = `Тема: ${subject}\n\n${body}`;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✅ Письмо скопировано в буфер обмена!');
+            });
+        }
+
+        function copySubject() {
+            const text = document.getElementById('resultSubject').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✅ Тема скопирована!');
+            });
+        }
+
+        function copyBody() {
+            const text = document.getElementById('resultBody').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✅ Текст письма скопирован!');
+            });
+        }
+
+        function generateAgain() {
+            document.getElementById('emailForm').requestSubmit();
+        }
+    </script>
+</body>
+</html>
