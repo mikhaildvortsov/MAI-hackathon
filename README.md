@@ -1,18 +1,34 @@
 # BizMail AI Assistant
 
-Минимальный сервис FastAPI, который получает параметры письма и вызывает ChatGPT для генерации ответа в корпоративном стиле.
+AI-ассистент для генерации корпоративных писем. Backend на FastAPI с интеграцией YandexGPT, Frontend на React.
 
 ## Быстрый старт
+
+### Backend
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-cp env.example .env  # заполните OPENAI_API_KEY
+cp env.example .env  # заполните YANDEX_API_KEY и YANDEX_FOLDER_ID
 uvicorn backend.app.main:app --reload --port 8001
 ```
 
 Документация доступна на `http://localhost:8001/api/docs`.
+
+### Frontend (React)
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Frontend будет доступен на `http://localhost:5500`
+
+### Старый HTML фронтенд
+
+Старый HTML файл `site.html` можно открыть напрямую в браузере или через Live Server.
 
 ## Проверка интеграции
 
@@ -127,9 +143,26 @@ curl -X POST http://localhost:8001/api/emails/generate \
 
 ## Структура
 
-- `backend/app/models.py` – Pydantic-модели и параметры тонкой настройки (включая `custom_prompt` и поля `sender_first_name`/`sender_last_name`/`sender_position` для подписи).
-- `backend/app/services/prompt_builder.py` – генерация промпта из параметров.
-- `backend/app/services/chatgpt_client.py` – вызов OpenAI и парсинг ответа.
-- `backend/app/api/routes.py` – REST-эндпоинт `/api/emails/generate`.
-- `tests/test_prompt_builder.py` – проверяет, что параметры попадают в промпт.
+### Backend
+
+- `backend/app/models.py` – Pydantic-модели и параметры тонкой настройки
+- `backend/app/services/prompt_builder.py` – генерация промпта из параметров
+- `backend/app/services/yandex_gpt_client.py` – вызов YandexGPT API и парсинг ответа
+- `backend/app/services/department_detector.py` – автоматическое определение отдела банка
+- `backend/app/api/routes.py` – REST-эндпоинты `/api/emails/generate` и `/api/emails/analyze`
+- `tests/test_prompt_builder.py` – тесты
+
+### Frontend
+
+- `frontend/src/components/` – React компоненты
+- `frontend/src/services/api.js` – API клиент
+- `frontend/src/styles/` – CSS стили
+
+## Особенности
+
+- ✅ Автоматическое определение отдела банка на основе содержания письма
+- ✅ AI анализ входящего письма для подбора оптимальных параметров
+- ✅ Генерация писем с учетом корпоративного стиля
+- ✅ Современный React интерфейс
+- ✅ Интеграция с YandexGPT (Qwen 3 235B)
 

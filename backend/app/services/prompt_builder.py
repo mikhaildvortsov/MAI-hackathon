@@ -1,4 +1,4 @@
-"""Converts API input into a ChatGPT-ready prompt."""
+"""Converts API input into a prompt for AI model."""
 
 from __future__ import annotations
 
@@ -54,10 +54,16 @@ def _compose_context(req: EmailGenerationRequest) -> str:
     return "\n\n".join(sections)
 
 
-def build_messages(req: EmailGenerationRequest) -> List[Dict[str, str]]:
-    """Return chat messages array for OpenAI Chat Completions API."""
+def build_messages(req: EmailGenerationRequest, department: str = None) -> List[Dict[str, str]]:
+    """Return chat messages array for AI model."""
     params_section = _render_parameters(req.parameters)
     context_block = _compose_context(req)
+    
+    # Добавляем инструкцию об отделе, если он определен
+    department_instruction = ""
+    if department:
+        department_instruction = f"\n        - В самом конце письма, после подписи, добавь строку: \"Направить в {department}\""
+    
     prompt = dedent(
         f"""
         Ты корпоративный ассистент крупного банка. Сгенерируй черновик письма,
@@ -82,7 +88,13 @@ def build_messages(req: EmailGenerationRequest) -> List[Dict[str, str]]:
           Тема: <краткая формулировка>
           Тело:
           <готовый текст письма>
-        - Заверши письмо подписью из блока "Данные подписанта" (Имя, Фамилия, Должность), перечисляя каждое поле с новой строки. Если данных нет, ограничься общим корпоративным завершением.
+        - В конце письма добавь подпись в формате:
+          С уважением,
+          [Имя] [Фамилия]
+          [Должность]
+          Используй ТОЧНО те значения из блока "Данные подписанта", не изменяй и не переставляй их местами.
+          Если имя или фамилия не указаны, используй только те данные, которые есть.
+          Каждая строка подписи должна быть на новой строке.{department_instruction}
         """
     ).strip()
     return [

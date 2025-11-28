@@ -1,7 +1,6 @@
 """Configuration helpers for the BizMail backend."""
 
 from functools import lru_cache
-from typing import Literal
 import os
 
 from dotenv import load_dotenv
@@ -12,21 +11,25 @@ load_dotenv()
 class Settings:
     """Holds application-wide configuration."""
 
-    openai_api_key: str
-    openai_model: str
+    yandex_api_key: str
+    yandex_folder_id: str
+    yandex_model: str
 
     def __init__(self) -> None:
-        key = os.getenv("OPENAI_API_KEY")
-        if not key:
-            raise RuntimeError("OPENAI_API_KEY is not set")
-        model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+        api_key = os.getenv("YANDEX_API_KEY") or os.getenv("api_key")
+        folder_id = os.getenv("YANDEX_FOLDER_ID") or os.getenv("folder_id")
+        
+        if not api_key:
+            raise RuntimeError("YANDEX_API_KEY (or api_key) is not set")
+        if not folder_id:
+            raise RuntimeError("YANDEX_FOLDER_ID (or folder_id) is not set")
+        
+        self.yandex_api_key = api_key
+        self.yandex_folder_id = folder_id
+        self.yandex_model = os.getenv("YANDEX_MODEL", "qwen3-235b-a22b-fp8/latest")
 
-        self.openai_api_key = key
-        self.openai_model = model
 
-
-@lru_cache
 def get_settings() -> Settings:
-    """Return cached settings instance."""
+    """Return settings instance."""
     return Settings()
 
