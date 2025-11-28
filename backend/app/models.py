@@ -62,6 +62,17 @@ class EmailGenerationRequest(BaseModel):
     )
 
 
+class EmailAnalysisRequest(BaseModel):
+    """Запрос на анализ входящего письма"""
+    source_subject: str
+    source_body: str
+    company_context: str = ""
+
+
+class EmailParametersResponse(BaseModel):
+    """Ответ с автоматически определенными параметрами"""
+    parameters: EmailParameters
+
 class EmailGenerationResponse(BaseModel):
     """Returned to the caller after the LLM produces a draft."""
 
