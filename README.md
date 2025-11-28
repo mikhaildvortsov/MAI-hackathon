@@ -9,10 +9,10 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 cp env.example .env  # заполните OPENAI_API_KEY
-uvicorn backend.app.main:app --reload
+uvicorn backend.app.main:app --reload --port 8001
 ```
 
-Документация доступна на `http://localhost:8000/api/docs`.
+Документация доступна на `http://localhost:8001/api/docs`.
 
 ## Проверка интеграции
 
@@ -25,7 +25,7 @@ PYTHONPATH=. pytest -q
 - По умолчанию `custom_prompt` оставляйте пустым (`""` или просто не передавайте). Добавляйте текст только тогда, когда нужно явно описать задачу или цель письма.
 
 ```bash
-curl -X POST http://localhost:8000/api/emails/generate \
+curl -X POST http://localhost:8001/api/emails/generate \
   -H "Content-Type: application/json" \
   -d '{
         "source_subject":"Ответ ФНС",

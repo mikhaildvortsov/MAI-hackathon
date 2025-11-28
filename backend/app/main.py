@@ -2,6 +2,7 @@
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import Response
 
 from .api.routes import router
 
@@ -20,6 +21,16 @@ app.add_middleware(
 )
 
 app.include_router(router)
+
+
+@app.get("/", tags=["meta"])
+async def root() -> dict[str, str]:
+    return {"service": "BizMail AI Assistant", "status": "ok", "docs": "/api/docs"}
+
+
+@app.get("/favicon.ico", tags=["meta"])
+async def favicon() -> Response:
+    return Response(status_code=204)
 
 
 @app.get("/health", tags=["meta"])
