@@ -1,34 +1,34 @@
-"""FastAPI routes for the BizMail backend."""
+"""API routes for email generation."""
 
-from fastapi import APIRouter, Depends, HTTPException
-import logging
+from fastapi import APIRouter
 
-from ..models import EmailGenerationRequest, EmailGenerationResponse
+from ..models import (
+    EmailGenerationRequest,
+    EmailGenerationResponse,
+    EmailAnalysisRequest,
+    EmailParametersResponse,
+)
 from ..services.chatgpt_client import ChatGPTService
 
-router = APIRouter(prefix="/api", tags=["emails"])
-logger = logging.getLogger(__name__)
+router = APIRouter(prefix="/api/emails", tags=["emails"])
 
 
-def get_chatgpt_service() -> ChatGPTService:
-    return ChatGPTService()
+@router.post("/generate", response_model=EmailGenerationResponse)
+def generate_email(request: EmailGenerationRequest) -> EmailGenerationResponse:
+    """Generate a professional email based on the request parameters."""
+    service = ChatGPTService()
+    return service.generate_letter(request)
 
 
-@router.post(
-    "/emails/generate",
-    response_model=EmailGenerationResponse,
-    summary="Generate a corporate email draft via ChatGPT",
-)
-async def generate_email_endpoint(
-    payload: EmailGenerationRequest,
-    service: ChatGPTService = Depends(get_chatgpt_service),
-) -> EmailGenerationResponse:
-    try:
-        return service.generate_letter(payload)
-    except Exception as e:
-        logger.error(f"Error generating email: {e}", exc_info=True)
-        raise HTTPException(
-            status_code=500,
-            detail=f"Ошибка генерации письма: {str(e)}"
-        )
-
+@router.post("/analyze", response_model=EmailParametersResponse)
+def analyze_email(request: EmailAnalysisRequest) -> EmailParametersResponse:
+    """Analyze incoming email and automatically determine optimal parameters."""
+    service = ChatGPTService()
+    
+    params = service.analyze_email_parameters(
+        subject=request.source_subject,
+        body=request.source_body,
+        company_context=request.company_context,
+    )
+    
+    return EmailParametersResponse(parameters=params)
