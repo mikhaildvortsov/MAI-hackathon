@@ -147,7 +147,7 @@
             margin-bottom: 10px;
             box-shadow: 0 2px 12px #fc5c7d33;
         }
-        
+
         /* === GENERATOR PAGE === */
         .generator {
             background: var(--bg);
@@ -186,7 +186,7 @@
         }
         .api-hint.success { color: #22ad55; }
         .api-hint.error { color: #c53030; }
-        
+
         /* Форма */
         .form-container {
             max-width: 1400px;
@@ -203,7 +203,7 @@
             padding: 24px;
             margin-bottom: 25px;
         }
-        
+
         .sender-info-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -217,7 +217,7 @@
             gap: 25px;
             margin-bottom: 25px;
         }
-        
+
         .column-left, .column-right {
             background: var(--panel);
             border-radius: var(--radius);
@@ -225,7 +225,7 @@
             box-shadow: var(--shadow);
             padding: 24px;
         }
-        
+
         .column-header {
             font-size: 1.3em;
             font-weight: 700;
@@ -235,12 +235,12 @@
             align-items: center;
             gap: 10px;
         }
-        
+
         /* Поля ввода */
         .form-group {
             margin-bottom: 20px;
         }
-        
+
         .form-group label {
             display: block;
             font-weight: 700;
@@ -248,7 +248,7 @@
             margin-bottom: 8px;
             color: #29355c;
         }
-        
+
         .form-group input[type="text"],
         .form-group textarea,
         .form-group select {
@@ -262,19 +262,19 @@
             background: #fff;
             transition: border 0.2s;
         }
-        
+
         .form-group input:focus,
         .form-group textarea:focus,
         .form-group select:focus {
             outline: none;
             border: 2px solid #6a82fb;
         }
-        
+
         .form-group textarea {
             min-height: 120px;
             resize: vertical;
         }
-        
+
         .form-group select {
             padding: 15px 16px;
             font-size: 1.05em;
@@ -292,32 +292,32 @@
             color: #777;
             margin-top: 6px;
         }
-        
+
         /* Параметры */
         .param-section {
             margin-bottom: 22px;
             padding-bottom: 18px;
             border-bottom: 1px solid #e0e0e0;
         }
-        
+
         .param-section:last-child {
             border-bottom: none;
         }
-        
+
         .param-label {
             font-weight: 700;
             font-size: 1.05em;
             margin-bottom: 10px;
             color: #29355c;
         }
-        
+
         .radio-group,
         .checkbox-group {
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
-        
+
         .radio-group label,
         .checkbox-group label {
             font-size: 1em;
@@ -327,14 +327,14 @@
             font-weight: 500;
             cursor: pointer;
         }
-        
+
         .radio-group input[type="radio"],
         .checkbox-group input[type="checkbox"] {
             accent-color: #6a82fb;
             transform: scale(1.2);
             cursor: pointer;
         }
-        
+
         /* Дополнительные указания */
         .directive-item {
             display: flex;
@@ -342,7 +342,7 @@
             margin-bottom: 12px;
             align-items: center;
         }
-        
+
         .directive-item input {
             flex: 1;
         }
@@ -364,7 +364,7 @@
         .btn-add:hover {
             background: linear-gradient(95deg,#fc5c7d 55%,#6a82fb 100%);
         }
-        
+
         .btn-remove {
             background: #ff4444;
             color: white;
@@ -375,7 +375,7 @@
             font-size: 0.9em;
             font-weight: 600;
         }
-        
+
         /* Кнопки */
         .btn-analyze {
             background: linear-gradient(95deg, #22ad55 0%, #28c76f 100%);
@@ -391,7 +391,7 @@
             width: 100%;
             margin-top: 15px;
         }
-        
+
         .btn-analyze:hover:not(:disabled) {
             background: linear-gradient(95deg, #28c76f 0%, #22ad55 100%);
             box-shadow: 0 5px 24px #22ad5560;
@@ -416,26 +416,26 @@
             box-shadow: 0 4px 20px #6a82fb40;
             transition: 0.2s;
         }
-        
+
         .btn-regenerate:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 6px 30px #6a82fb60;
         }
-        
+
         .btn-regenerate:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
-        
+
         /* Результат */
         .result-container {
             display: none;
         }
-        
+
         .result-container.active {
             display: block;
         }
-        
+
         .result-header {
             display: flex;
             justify-content: space-between;
@@ -459,13 +459,13 @@
             padding: 8px 16px;
             transition: all 0.2s;
         }
-        
+
         .btn-icon:hover {
             color: #fff;
             background: linear-gradient(90deg,#6a82fb,#fc5c7d);
             border-color: transparent;
         }
-        
+
         .result-field {
             background: #f5f6fa;
             border-radius: 10px;
@@ -482,7 +482,7 @@
             border: 2px solid #6a82fb;
             background: #fff;
         }
-        
+
         /* Loading */
         .loading {
             text-align: center;
@@ -493,7 +493,7 @@
         .loading.active {
             display: block;
         }
-        
+
         .spinner {
             border: 3.5px solid #f3f3f3;
             border-top: 3.5px solid #667eea;
@@ -503,7 +503,7 @@
             animation: spin 1s linear infinite;
             margin: 0 auto 16px;
         }
-        
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -515,12 +515,12 @@
             padding: 36px 20px;
             text-align: center;
         }
-        
+
         .footer a {
             color: #667eea;
             text-decoration: none;
         }
-        
+
         /* Адаптивность */
         @media (max-width: 1100px) {
             .two-column-grid {
@@ -533,7 +533,7 @@
                 grid-template-columns: 1fr;
             }
         }
-        
+
         @media (max-width:680px) {
             .hero h1 { font-size: 2em; }
             .container { padding: 0 6px; }
@@ -630,7 +630,7 @@
             </div>
         </footer>
     </div>
-    
+
     <!-- GENERATOR PAGE -->
     <div id="generatorPage" class="generator">
         <button class="nav-back" onclick="showHomepage()">← Вернуться на главную</button>
@@ -647,15 +647,15 @@
                             <div class="form-group" style="margin-bottom: 0;">
                                 <label for="sender_first_name">Имя *</label>
                                 <input type="text" id="sender_first_name" required placeholder="Например: Иван">
-                            </div>
+                        </div>
                             <div class="form-group" style="margin-bottom: 0;">
                                 <label for="sender_last_name">Фамилия *</label>
                                 <input type="text" id="sender_last_name" required placeholder="Например: Иванов">
-                            </div>
+                        </div>
                             <div class="form-group" style="margin-bottom: 0;">
                                 <label for="sender_position">Должность *</label>
                                 <input type="text" id="sender_position" required placeholder="Например: Менеджер по развитию">
-                            </div>
+                    </div>
                         </div>
                         <div class="hint" style="margin-top: 10px;">Эти данные будут использованы для подписи в ответном письме</div>
                     </div>
@@ -671,19 +671,19 @@
                             <div class="form-group">
                                 <label for="source_body">Текст письма</label>
                                 <textarea id="source_body" required placeholder="Вставьте текст входящего письма" style="min-height: 280px;"></textarea>
-                            </div>
-                            <div class="form-group">
+                        </div>
+                        <div class="form-group">
                                 <label for="company_context">Контекст компании</label>
                                 <textarea id="company_context" required placeholder="Например: ПАО Банк. Соблюдаем строгий деловой стиль." style="min-height: 100px;"></textarea>
                                 <div class="hint">Информация о стиле общения вашей компании</div>
-                            </div>
+                        </div>
                             
                             <!-- Кнопка анализа и генерации -->
                             <button type="button" class="btn-analyze" id="analyzeBtn" onclick="analyzeAndGenerate()">
                                 🤖 Анализировать и сгенерировать ответ
                             </button>
-                        </div>
-                        
+                    </div>
+
                         <!-- ПРАВАЯ КОЛОНКА: Параметры и Результат -->
                         <div class="column-right">
                             <!-- Инструкция (показывается изначально) -->
@@ -702,14 +702,14 @@
                             <!-- Параметры (скрыты до генерации) -->
                             <div id="parametersContainer" style="display:none;">
                                 <div class="column-header">⚙️ Параметры генерации</div>
-                                
+                        
                                 <div class="param-section">
                                     <div class="param-label">Тон письма</div>
-                                    <div class="radio-group">
+                            <div class="radio-group">
                                         <label><input type="radio" name="tone" value="formal" checked> Формальный</label>
                                         <label><input type="radio" name="tone" value="neutral"> Нейтральный</label>
                                         <label><input type="radio" name="tone" value="friendly"> Дружелюбный</label>
-                                    </div>
+                                </div>
                                 </div>
                                 
                                 <div class="param-section">
@@ -718,64 +718,64 @@
                                         <label><input type="radio" name="length" value="short" checked> Короткое (3-4 предложения)</label>
                                         <label><input type="radio" name="length" value="medium"> Среднее (5-8 предложений)</label>
                                         <label><input type="radio" name="length" value="long"> Длинное (8-12 предложений)</label>
-                                    </div>
-                                </div>
-                                
+                            </div>
+                        </div>
+
                                 <div class="param-section">
                                     <div class="param-label">Цель письма</div>
-                                    <select id="purpose">
-                                        <option value="response">Ответ</option>
-                                        <option value="proposal">Предложение</option>
-                                        <option value="notification">Уведомление</option>
-                                        <option value="refusal">Отказ</option>
-                                    </select>
-                                </div>
-                                
+                                <select id="purpose">
+                                    <option value="response">Ответ</option>
+                                    <option value="proposal">Предложение</option>
+                                    <option value="notification">Уведомление</option>
+                                    <option value="refusal">Отказ</option>
+                                </select>
+                            </div>
+
                                 <div class="param-section">
                                     <div class="param-label">Аудитория</div>
-                                    <select id="audience">
-                                        <option value="colleague">Коллега</option>
-                                        <option value="manager">Руководитель</option>
-                                        <option value="client">Клиент</option>
-                                        <option value="partner">Партнер</option>
-                                        <option value="regulator">Регулятор</option>
-                                    </select>
-                                </div>
-                                
+                                <select id="audience">
+                                    <option value="colleague">Коллега</option>
+                                    <option value="manager">Руководитель</option>
+                                    <option value="client">Клиент</option>
+                                    <option value="partner">Партнер</option>
+                                    <option value="regulator">Регулятор</option>
+                                </select>
+                        </div>
+
                                 <div class="param-section">
                                     <div class="param-label">Стиль обращения</div>
-                                    <div class="radio-group">
+                            <div class="radio-group">
                                         <label><input type="radio" name="address_style" value="vy" checked> "Вы"</label>
                                         <label><input type="radio" name="address_style" value="ty"> "ты"</label>
                                         <label><input type="radio" name="address_style" value="full_name"> Полное имя</label>
-                                    </div>
-                                </div>
-                                
+                            </div>
+                        </div>
+
                                 <div class="param-section">
                                     <div class="param-label">Срочность</div>
-                                    <select id="urgency">
-                                        <option value="low">Низкая</option>
-                                        <option value="normal" selected>Обычная</option>
-                                        <option value="high">Высокая</option>
-                                    </select>
-                                </div>
-                                
+                            <select id="urgency">
+                                <option value="low">Низкая</option>
+                                <option value="normal" selected>Обычная</option>
+                                <option value="high">Высокая</option>
+                            </select>
+                        </div>
+
                                 <div class="param-section">
                                     <div class="param-label">Дополнительные опции</div>
-                                    <div class="checkbox-group">
+                            <div class="checkbox-group">
                                         <label><input type="checkbox" id="include_formal_greetings" checked> Формальные приветствия</label>
                                         <label><input type="checkbox" id="include_greeting_and_signoff" checked> Приветствие и подпись</label>
                                         <label><input type="checkbox" id="include_corporate_phrases" checked> Корпоративные фразы</label>
-                                    </div>
+                                </div>
                                 </div>
                                 
                                 <div class="param-section">
                                     <div class="param-label">Дополнительные указания</div>
                                     <div id="extraDirectives"></div>
                                     <button type="button" class="btn-add" onclick="addDirective()">+ Добавить указание</button>
-                                </div>
                             </div>
-                            
+                        </div>
+
                             <!-- Результат (скрыт по умолчанию) -->
                             <div id="resultContainer" class="result-container">
                                 <div class="result-header">
@@ -785,33 +785,33 @@
                                         <button type="button" class="btn-icon" onclick="clearResult()">🗑️ Очистить</button>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                        <div class="form-group">
                                     <label>Тема ответа</label>
                                     <div class="result-field" id="resultSubject" contenteditable="true"></div>
-                                </div>
-                                <div class="form-group">
+                        </div>
+                        <div class="form-group">
                                     <label>Текст ответа</label>
                                     <div class="result-field" id="resultBody" contenteditable="true" style="min-height: 320px;"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Кнопка перегенерации (показывается после первой генерации) -->
                     <button type="button" class="btn-regenerate" id="regenerateBtn" style="display:none;" onclick="manualRegenerate()">
                         🔄 Перегенерировать ответ с новыми параметрами
                     </button>
                     
                     <!-- Loading -->
-                    <div class="loading" id="loading">
-                        <div class="spinner"></div>
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
                         <p id="loadingText">Анализируем письмо...</p>
-                    </div>
+                </div>
                 </form>
             </div>
         </div>
     </div>
-    
+
     <script>
         const resolveApiBase = () => {
             const meta = document.querySelector('meta[name="bizmail-api-base"]');
@@ -819,17 +819,17 @@
             if (window.location.origin && window.location.origin.startsWith('http')) return window.location.origin.replace(/\/$/, '');
             return 'http://localhost:8001';
         };
-        
+
         const API_BASE_URL = resolveApiBase();
         const apiStatusEl = document.getElementById('apiStatus');
-        
+
         const updateApiStatus = (msg, state) => {
             if (!apiStatusEl) return;
             apiStatusEl.textContent = msg;
             apiStatusEl.classList.remove('success', 'error');
             if (state) apiStatusEl.classList.add(state);
         };
-        
+
         const verifyBackend = async () => {
             updateApiStatus(`Проверяем соединение с API (${API_BASE_URL})...`);
             try {
@@ -840,23 +840,23 @@
                 updateApiStatus(`✗ Нет связи с сервером ${API_BASE_URL}`, 'error');
             }
         };
-        
+
         verifyBackend();
-        
+
         function showGenerator() {
             document.getElementById('homepage').style.display = 'none';
             document.getElementById('generatorPage').classList.add('active');
             setTimeout(()=>{window.scrollTo(0,0);},50);
         }
-        
+
         function showHomepage() {
             document.getElementById('homepage').style.display = 'block';
             document.getElementById('generatorPage').classList.remove('active');
             clearResult();
         }
-        
+
         let directiveCount = 0;
-        
+
         function addDirective() {
             directiveCount++;
             const container = document.getElementById('extraDirectives');
@@ -866,11 +866,11 @@
             div.innerHTML = `<input type="text" placeholder="Введите дополнительное указание" class="directive-input"> <button type="button" class="btn-remove" onclick="removeDirective(${directiveCount})">✕</button>`;
             container.appendChild(div);
         }
-        
+
         function removeDirective(id) {
             document.getElementById(`directive-${id}`)?.remove();
         }
-        
+
         function clearResult() {
             document.getElementById('parametersContainer').style.display = 'none';
             document.getElementById('resultContainer').classList.remove('active');
@@ -919,7 +919,7 @@
                 sender_last_name: lastName,
                 sender_position: position
             };
-            
+
             // Показываем загрузку
             document.getElementById('analyzeBtn').disabled = true;
             document.getElementById('analyzeBtn').textContent = '⏳ Анализирую...';
@@ -1012,16 +1012,16 @@
                 requestBody.parameters.extra_directives = directives;
             }
             
-            const response = await fetch(`${API_BASE_URL}/api/emails/generate`, {
-                method: 'POST',
+                const response = await fetch(`${API_BASE_URL}/api/emails/generate`, {
+                    method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(requestBody)
-            });
-            
-            if (!response.ok) {
+                });
+
+                if (!response.ok) {
                 let err = `HTTP ${response.status}`;
-                try {
-                    const payload = await response.json();
+                    try {
+                        const payload = await response.json();
                     if (payload.detail) err = typeof payload.detail === 'string' ? payload.detail : JSON.stringify(payload.detail);
                     else if (payload.message) err = payload.message;
                 } catch {}
@@ -1033,7 +1033,7 @@
             // Показываем результат
             document.getElementById('resultSubject').textContent = result.subject;
             document.getElementById('resultBody').textContent = result.body;
-        }
+                            }
         
         // Получение текущих параметров
         function getCurrentFormParameters() {
@@ -1054,8 +1054,8 @@
                 include_corporate_phrases: document.getElementById('include_corporate_phrases').checked,
                 extra_directives: directives.length ? directives : null
             };
-        }
-        
+                }
+
         // ===== РУЧНАЯ ПЕРЕГЕНЕРАЦИЯ =====
         async function manualRegenerate() {
             if (!currentRequestData) {
@@ -1079,7 +1079,7 @@
                 document.getElementById('regenerateBtn').textContent = '🔄 Перегенерировать ответ с новыми параметрами';
             }
         }
-        
+
         function copyResult() {
             const subject = document.getElementById('resultSubject').textContent;
             const body = document.getElementById('resultBody').textContent;

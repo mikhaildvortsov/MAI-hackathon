@@ -1,5 +1,6 @@
 """Определение отдела банка на основе содержания письма."""
 
+import re
 from typing import Literal
 
 # Список основных отделов банка
@@ -105,17 +106,122 @@ DEPARTMENT_KEYWORDS = {
 }
 
 
+# Веса для ключевых слов отделов
+DEPARTMENT_KEYWORD_WEIGHTS = {
+    "Отдел ипотечного кредитования": {
+        "ипотека": 3.0,
+        "ипотечный кредит": 4.0,
+        "недвижимость": 2.5,
+        "жилье": 2.0,
+        "квартира": 2.0,
+        "дом": 1.5,
+        "ипотечная программа": 3.5,
+        "льготный период": 2.0,
+    },
+    "Отдел кредитования": {
+        "кредит": 2.0,
+        "кредитная заявка": 3.5,
+        "кредитный договор": 3.0,
+        "процентная ставка": 2.5,
+        "погашение кредита": 2.5,
+        "рефинансирование": 3.0,
+        "кредитная история": 2.0,
+        "просроченная задолженность": 3.5,
+        "просрочка": 2.5,
+    },
+    "Отдел карточных продуктов": {
+        "карта": 2.5,
+        "дебетовая карта": 3.5,
+        "кредитная карта": 3.5,
+        "блокировка карты": 3.0,
+        "перевыпуск карты": 3.0,
+        "кэшбэк": 2.0,
+        "бонусы": 1.5,
+    },
+    "Отдел депозитов и вкладов": {
+        "вклад": 3.0,
+        "депозит": 3.0,
+        "процент по вкладу": 3.5,
+        "накопительный счет": 2.5,
+        "капитализация процентов": 2.5,
+    },
+    "Отдел безопасности": {
+        "мошенничество": 4.0,
+        "безопасность": 2.5,
+        "подозрительная операция": 4.0,
+        "фишинг": 3.5,
+        "кража данных": 4.0,
+        "несанкционированный доступ": 4.0,
+    },
+    "Отдел претензий и жалоб": {
+        "жалоба": 4.0,
+        "претензия": 4.0,
+        "недовольство": 3.5,
+        "возврат средств": 3.5,
+        "компенсация": 3.0,
+    },
+    "Отдел партнерств и развития бизнеса": {
+        "партнерство": 3.5,
+        "сотрудничество": 3.0,
+        "партнерская программа": 4.0,
+        "b2b": 2.5,
+        "интеграция": 2.0,
+    },
+    "Отдел IT и цифровых решений": {
+        "техническая поддержка": 3.5,
+        "мобильное приложение": 3.0,
+        "сайт": 2.0,
+        "api": 2.5,
+        "баг": 2.5,
+        "ошибка системы": 3.0,
+    },
+    "Отдел корпоративного обслуживания": {
+        "юридическое лицо": 3.5,
+        "корпоративный клиент": 3.0,
+        "бизнес-счет": 3.0,
+        "расчетно-кассовое обслуживание": 3.5,
+    },
+    "Отдел операционного обслуживания": {
+        "операции": 1.0,
+        "обработка": 1.0,
+        "документы": 1.0,
+    },
+}
+
+
+def calculate_department_score(text: str, department: str) -> float:
+    """Вычисляет взвешенный score для отдела."""
+    text_lower = text.lower()
+    score = 0.0
+    
+    # Используем веса, если они есть
+    if department in DEPARTMENT_KEYWORD_WEIGHTS:
+        weights = DEPARTMENT_KEYWORD_WEIGHTS[department]
+        for keyword, weight in weights.items():
+            pattern = r'\b' + re.escape(keyword.lower()) + r'\b'
+            matches = len(re.findall(pattern, text_lower, re.IGNORECASE))
+            score += matches * weight
+    else:
+        # Fallback на старый метод для отделов без весов
+        keywords = DEPARTMENT_KEYWORDS.get(department, [])
+        for keyword in keywords:
+            pattern = r'\b' + re.escape(keyword.lower()) + r'\b'
+            if re.search(pattern, text_lower, re.IGNORECASE):
+                score += 1.0
+    
+    return score
+
+
 def detect_department_by_keywords(subject: str, body: str) -> str:
     """
-    Определяет отдел банка на основе ключевых слов в теме и тексте письма.
-    Возвращает отдел с наибольшим количеством совпадений.
-    Использует приоритеты для более специфичных отделов (например, ипотека > кредит).
+    Определяет отдел банка на основе взвешенных ключевых слов в теме и тексте письма.
+    Использует систему весов для более точного определения.
     """
     text = f"{subject} {body}".lower()
     
     department_scores = {}
     
-    # Приоритетные отделы (проверяются первыми для более точного определения)
+    # Приоритетные отделы (получают бонус к score)
     priority_departments = [
         "Отдел ипотечного кредитования",
         "Отдел карточных продуктов",
@@ -124,27 +230,19 @@ def detect_department_by_keywords(subject: str, body: str) -> str:
         "Отдел претензий и жалоб",
     ]
     
-    # Сначала проверяем приоритетные отделы
-    for department in priority_departments:
-        if department in DEPARTMENT_KEYWORDS:
-            keywords = DEPARTMENT_KEYWORDS[department]
-            score = sum(1 for keyword in keywords if keyword.lower() in text)
-            if score > 0:
-                department_scores[department] = score * 2  # Увеличиваем вес приоритетных отделов
-    
-    # Затем проверяем остальные отделы
-    for department, keywords in DEPARTMENT_KEYWORDS.items():
-        if department not in priority_departments:
-            score = sum(1 for keyword in keywords if keyword.lower() in text)
-            if score > 0:
-                # Если отдел уже есть в scores, берем максимум
-                if department in department_scores:
-                    department_scores[department] = max(department_scores[department], score)
-                else:
-                    department_scores[department] = score
+    # Вычисляем score для всех отделов
+    for department in DEPARTMENT_KEYWORDS.keys():
+        score = calculate_department_score(text, department)
+        
+        # Бонус для приоритетных отделов
+        if department in priority_departments and score > 0:
+            score *= 1.5
+        
+        if score > 0:
+            department_scores[department] = score
     
     if department_scores:
-        # Возвращаем отдел с наибольшим количеством совпадений
+        # Возвращаем отдел с наибольшим score
         return max(department_scores.items(), key=lambda x: x[1])[0]
     
     # Если не найдено совпадений, возвращаем отдел операционного обслуживания

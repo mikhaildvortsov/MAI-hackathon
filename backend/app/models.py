@@ -1,6 +1,6 @@
 """Pydantic models shared across the API."""
 
-from typing import Literal, Optional
+from typing import Literal, Optional, List
 
 from pydantic import BaseModel, Field
 
@@ -11,6 +11,15 @@ Length = Literal["short", "medium", "long"]
 Audience = Literal["colleague", "manager", "client", "partner", "regulator"]
 AddressStyle = Literal["vy", "ty", "full_name"]
 Urgency = Literal["low", "normal", "high"]
+EmailCategory = Literal[
+    "information_request",  # Запрос информации/документов
+    "complaint",  # Официальная жалоба или претензия
+    "regulatory_request",  # Регуляторный запрос
+    "partnership_proposal",  # Партнёрское предложение
+    "approval_request",  # Запрос на согласование
+    "notification",  # Уведомление или информирование
+    "other"  # Прочее
+]
 
 
 class EmailParameters(BaseModel):
@@ -72,6 +81,26 @@ class EmailAnalysisRequest(BaseModel):
 class EmailParametersResponse(BaseModel):
     """Ответ с автоматически определенными параметрами"""
     parameters: EmailParameters
+
+
+class ExtractedInfo(BaseModel):
+    """Извлеченная ключевая информация из письма"""
+    request_essence: str = Field(..., description="Суть запроса и ожидания отправителя")
+    contact_info: Optional[str] = Field(None, description="Контактные данные и реквизиты")
+    regulatory_references: Optional[List[str]] = Field(None, description="Ссылки на нормативные акты")
+    requirements: Optional[List[str]] = Field(None, description="Требования и ожидания отправителя")
+    legal_risks: Optional[List[str]] = Field(None, description="Потенциальные юридические риски и ограничения")
+
+
+class DetailedEmailAnalysis(BaseModel):
+    """Расширенный анализ входящего письма"""
+    category: EmailCategory = Field(..., description="Категория письма")
+    parameters: EmailParameters = Field(..., description="Параметры для генерации ответа")
+    extracted_info: ExtractedInfo = Field(..., description="Извлеченная ключевая информация")
+    department: str = Field(..., description="Определенный отдел для маршрутизации")
+    estimated_sla_days: int = Field(..., description="Расчетный срок ответа в рабочих днях")
+    extracted_deadline_days: Optional[int] = Field(None, description="Извлеченный дедлайн из текста письма в рабочих днях, если указан")
+
 
 class EmailGenerationResponse(BaseModel):
     """Returned to the caller after the LLM produces a draft."""

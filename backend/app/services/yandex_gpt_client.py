@@ -32,6 +32,10 @@ def _extract_subject_and_body(raw_text: str) -> tuple[str, str]:
     else:
         body = raw_text.strip()
 
+    # Убираем строку "Направить в [отдел]" если она есть
+    body = re.sub(r'\n?\s*Направить в .+?\n?$', '', body, flags=re.IGNORECASE | re.MULTILINE)
+    body = re.sub(r'\n?\s*направить в .+?\n?$', '', body, flags=re.MULTILINE)
+
     # Сохраняем переносы строк в теле письма (особенно для подписи)
     # Только убираем множественные пробелы, но сохраняем переносы строк
     lines = body.split('\n')
@@ -180,6 +184,8 @@ class YandexGPTService:
 - purpose: "response" | "proposal" | "notification" | "refusal"
 - length: "short" | "medium" | "long"
 - audience: "colleague" | "manager" | "client" | "partner" | "regulator"
+  * "client" - Клиент банка (получает услуги: кредиты, вклады, счета)
+  * "partner" - Бизнес-партнер (сотрудничество на равных: интеграции, совместные проекты, B2B)
 - urgency: "low" | "normal" | "high"
 - address_style: "vy" | "ty" | "full_name"
 """

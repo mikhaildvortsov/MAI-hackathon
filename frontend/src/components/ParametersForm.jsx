@@ -1,13 +1,20 @@
 import { useState, useEffect } from 'react'
 import './ParametersForm.css'
 
-function ParametersForm({ initialParameters, onRegenerate, onClear }) {
+function ParametersForm({ initialParameters, onRegenerate, onClear, hasSenderName = false, isLoading = false }) {
   const [parameters, setParameters] = useState(initialParameters)
   const [directives, setDirectives] = useState([])
 
   useEffect(() => {
     setParameters(initialParameters)
-  }, [initialParameters])
+    // Если полное имя недоступно, но было выбрано, сбрасываем на "vy"
+    if (!hasSenderName && initialParameters.address_style === 'full_name') {
+      setParameters({
+        ...initialParameters,
+        address_style: 'vy'
+      })
+    }
+  }, [initialParameters, hasSenderName])
 
   const handleChange = (field, value) => {
     setParameters({
@@ -137,11 +144,11 @@ function ParametersForm({ initialParameters, onRegenerate, onClear }) {
           value={parameters.audience}
           onChange={(e) => handleChange('audience', e.target.value)}
         >
-          <option value="colleague">Коллега</option>
-          <option value="manager">Руководитель</option>
-          <option value="client">Клиент</option>
-          <option value="partner">Партнер</option>
-          <option value="regulator">Регулятор</option>
+          <option value="colleague">Коллега (внутренняя переписка)</option>
+          <option value="manager">Руководитель (вышестоящее руководство)</option>
+          <option value="client">Клиент (пользователь услуг банка: физлицо или юрлицо)</option>
+          <option value="partner">Партнер (бизнес-партнер, совместные проекты, B2B)</option>
+          <option value="regulator">Регулятор (Банк России, надзорные органы)</option>
         </select>
       </div>
 
@@ -158,25 +165,17 @@ function ParametersForm({ initialParameters, onRegenerate, onClear }) {
             />
             "Вы"
           </label>
-          <label>
-            <input
-              type="radio"
-              name="address_style"
-              value="ty"
-              checked={parameters.address_style === 'ty'}
-              onChange={(e) => handleChange('address_style', e.target.value)}
-            />
-            "ты"
-          </label>
-          <label>
+          <label style={{ opacity: hasSenderName ? 1 : 0.5, cursor: hasSenderName ? 'pointer' : 'not-allowed' }}>
             <input
               type="radio"
               name="address_style"
               value="full_name"
               checked={parameters.address_style === 'full_name'}
               onChange={(e) => handleChange('address_style', e.target.value)}
+              disabled={!hasSenderName}
             />
             Полное имя
+            {!hasSenderName && <span style={{ fontSize: '0.75rem', color: 'var(--text-light)', marginLeft: '8px' }}>(не указано в исходном письме)</span>}
           </label>
         </div>
       </div>
@@ -254,8 +253,17 @@ function ParametersForm({ initialParameters, onRegenerate, onClear }) {
         </button>
       </div>
 
-      <button type="button" className="btn-regenerate" onClick={handleRegenerate}>
-        🔄 Перегенерировать ответ с новыми параметрами
+      <button type="button" className="btn-regenerate" onClick={handleRegenerate} disabled={isLoading}>
+        {isLoading ? (
+          <>
+            <span className="spinner"></span>
+            Генерируем...
+          </>
+        ) : (
+          <>
+            🔄 Перегенерировать ответ с новыми параметрами
+          </>
+        )}
       </button>
 
       <button type="button" className="btn-clear" onClick={onClear}>

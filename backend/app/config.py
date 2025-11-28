@@ -23,7 +23,7 @@ class Settings:
             raise RuntimeError("YANDEX_API_KEY (or api_key) is not set")
         if not folder_id:
             raise RuntimeError("YANDEX_FOLDER_ID (or folder_id) is not set")
-        
+
         self.yandex_api_key = api_key
         self.yandex_folder_id = folder_id
         self.yandex_model = os.getenv("YANDEX_MODEL", "qwen3-235b-a22b-fp8/latest")

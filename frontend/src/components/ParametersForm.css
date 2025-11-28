@@ -59,6 +59,20 @@
   height: 18px;
 }
 
+.radio-group input[type="radio"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.radio-group label:has(input[type="radio"]:disabled) {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.radio-group label:has(input[type="radio"]:disabled):hover {
+  background: transparent;
+}
+
 .parameters-form select {
   width: 100%;
   box-sizing: border-box;
@@ -158,7 +172,10 @@
   padding: 16px 40px;
   margin: 30px auto 0;
   cursor: pointer;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
   transition: all 0.3s ease;
   box-shadow: 0 8px 20px rgba(30, 58, 138, 0.3);
 }
@@ -169,9 +186,24 @@
 }
 
 .btn-regenerate:disabled {
-  opacity: 0.5;
+  opacity: 0.7;
   cursor: not-allowed;
   transform: none;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .btn-clear {

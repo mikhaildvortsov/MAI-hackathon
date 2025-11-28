@@ -59,11 +59,6 @@ def build_messages(req: EmailGenerationRequest, department: str = None) -> List[
     params_section = _render_parameters(req.parameters)
     context_block = _compose_context(req)
     
-    # Добавляем инструкцию об отделе, если он определен
-    department_instruction = ""
-    if department:
-        department_instruction = f"\n        - В самом конце письма, после подписи, добавь строку: \"Направить в {department}\""
-    
     prompt = dedent(
         f"""
         Ты корпоративный ассистент крупного банка. Сгенерируй черновик письма,
@@ -94,7 +89,7 @@ def build_messages(req: EmailGenerationRequest, department: str = None) -> List[
           [Должность]
           Используй ТОЧНО те значения из блока "Данные подписанта", не изменяй и не переставляй их местами.
           Если имя или фамилия не указаны, используй только те данные, которые есть.
-          Каждая строка подписи должна быть на новой строке.{department_instruction}
+          Каждая строка подписи должна быть на новой строке.
         """
     ).strip()
     return [
